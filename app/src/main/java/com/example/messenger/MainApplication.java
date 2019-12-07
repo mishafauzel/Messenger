@@ -1,6 +1,7 @@
 package com.example.messenger;
 
-import com.example.messenger.di.DaggerAppComponent;
+
+import com.example.messenger.di.application.DaggerAppComponent;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;

@@ -1,4 +1,4 @@
-package com.example.messenger.auth.ui;
+package com.example.messenger.messages.ui.fragments;
 
 
 import android.os.Bundle;
@@ -11,15 +11,13 @@ import android.view.ViewGroup;
 
 import com.example.messenger.R;
 
-import dagger.android.support.DaggerFragment;
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AuthFragmentFragment extends DaggerFragment {
+public class MessagesFragment extends Fragment {
 
 
-    public AuthFragmentFragment() {
+    public MessagesFragment() {
         // Required empty public constructor
     }
 
@@ -28,7 +26,7 @@ public class AuthFragmentFragment extends DaggerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_auth, container, false);
+        return inflater.inflate(R.layout.fragment_messages, container, false);
     }
 
 }

@@ -7,7 +7,16 @@
 
     <fragment
         android:id="@+id/authFragmentFragment"
-        android:name="com.example.messenger.auth.ui.AuthFragmentFragment"
+        android:name="com.example.messenger.auth.ui.AuthFragment"
         android:label="fragment_auth"
-        tools:layout="@layout/fragment_auth" />
+        tools:layout="@layout/fragment_auth" >
+        <action
+            android:id="@+id/action_authFragmentFragment_to_messagesActivity"
+            app:destination="@id/messagesActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/messagesActivity"
+        android:name="com.example.messenger.messages.ui.MessagesActivity"
+        android:label="activity_messages"
+        tools:layout="@layout/activity_messages" />
 </navigation>
