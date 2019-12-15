@@ -6,7 +6,9 @@ import android.os.Bundle;
 
 import com.example.messenger.R;
 
-public class MessagesActivity extends AppCompatActivity {
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class MessagesActivity extends DaggerAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

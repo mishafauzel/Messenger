@@ -1,6 +1,7 @@
 package com.example.messenger.auth.ui;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -32,6 +33,9 @@ public class AuthFragment extends DaggerFragment {
     @Inject
     ViewModelsFactory viewModelsFactiry;
     AuthViewModel viewModels;
+    FragmentInteraction interaction;
+
+
 
     public AuthFragment() {
         // Required empty public constructor
@@ -41,7 +45,17 @@ public class AuthFragment extends DaggerFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        viewModels.setNavController(null);
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof FragmentInteraction)
+        {
+            interaction=(FragmentInteraction)context;
+        }
+        else throw new RuntimeException("Context must implement FragmentInteraction interface ");
     }
 
     @Override
@@ -50,11 +64,41 @@ public class AuthFragment extends DaggerFragment {
         viewModels=ViewModelProviders.of(this,viewModelsFactiry).get(AuthViewModel.class);
         FragmentAuthBinding  binding=DataBindingUtil.inflate(inflater,R.layout.fragment_auth,container,false);
         binding.setViewModel(viewModels);
-        NavController navController=Navigation.findNavController(binding.getRoot());
-        viewModels.setNavController(navController);
+        subscribeOnLiveData();
+        binding.button.setOnClickListener((view)->
+        {
+            viewModels.executeLogin();
+
+        });
+
 
         // Inflate the layout for this fragment
         return binding.getRoot();
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        interaction=null;
+    }
+    public interface FragmentInteraction
+    {
+        //show progress bar if your login in progress
+         void showProgress(boolean isShown);
+         void loginComplete();
+    }
+    private void subscribeOnLiveData()
+    {
+        viewModels.getIsLoggetIn().removeObservers(this.getViewLifecycleOwner());
+        viewModels.getIsLoggetIn().observe(this,(isLoggedIn)->
+        {
+            if(isLoggedIn)
+            {
+                interaction.loginComplete();
+            }
+            else {
+                interaction.showProgress(false);
+            }
+        });
     }
 
 }

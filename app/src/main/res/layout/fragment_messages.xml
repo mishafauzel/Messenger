@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.messenger.messages.ViewModels.MessagesViewModel" />
+            type="com.example.messenger.messages.viewmodels.MessagesViewModel" />
     </data>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"

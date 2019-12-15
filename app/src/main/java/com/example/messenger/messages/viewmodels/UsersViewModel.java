@@ -1,4 +1,4 @@
-package com.example.messenger.messages.ViewModels;
+package com.example.messenger.messages.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 

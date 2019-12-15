@@ -1,10 +1,8 @@
-package com.example.messenger.messages.ViewModels;
+package com.example.messenger.messages.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 
 import javax.inject.Inject;
-
-import dagger.android.ContributesAndroidInjector;
 
 public class MessagesViewModel extends ViewModel {
     @Inject
