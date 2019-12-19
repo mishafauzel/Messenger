@@ -13,11 +13,14 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 
 import com.example.messenger.R;
 import com.example.messenger.auth.viewmodels.AuthViewModel;
 import com.example.messenger.databinding.FragmentAuthBinding;
 import com.example.messenger.viewmodels.ViewModelsFactory;
+
+import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
@@ -34,6 +37,8 @@ public class AuthFragment extends DaggerFragment {
     ViewModelsFactory viewModelsFactiry;
     AuthViewModel viewModels;
     FragmentInteraction interaction;
+
+
 
 
 
@@ -65,11 +70,14 @@ public class AuthFragment extends DaggerFragment {
         FragmentAuthBinding  binding=DataBindingUtil.inflate(inflater,R.layout.fragment_auth,container,false);
         binding.setViewModel(viewModels);
         subscribeOnLiveData();
+        viewModels.checkLoginState();
         binding.button.setOnClickListener((view)->
         {
+            interaction.showProgress(true);
             viewModels.executeLogin();
 
         });
+
 
 
         // Inflate the layout for this fragment
@@ -84,6 +92,7 @@ public class AuthFragment extends DaggerFragment {
     {
         //show progress bar if your login in progress
          void showProgress(boolean isShown);
+         //navigate to dialogs activity
          void loginComplete();
     }
     private void subscribeOnLiveData()
@@ -91,13 +100,21 @@ public class AuthFragment extends DaggerFragment {
         viewModels.getIsLoggetIn().removeObservers(this.getViewLifecycleOwner());
         viewModels.getIsLoggetIn().observe(this,(isLoggedIn)->
         {
-            if(isLoggedIn)
-            {
-                interaction.loginComplete();
-            }
-            else {
-                interaction.showProgress(false);
-            }
+          switch (isLoggedIn)
+          {
+              case LogedIn:
+              {
+                  interaction.loginComplete();
+              }
+              case NotLoggedIn:
+              {
+                  interaction.showProgress(false);
+              }
+              case PhoneNumberIncorrect:
+              {
+                  interaction.showProgress(false);
+              }
+          }
         });
     }
 
